@@ -1,6 +1,7 @@
 import "./style.css"
 import { comprarCarta, criarBaralho } from "./api/deck-of-cards"
 import { Coins, createIcons, Dices, Layers } from "lucide"
+import { criarBaralhoUI } from "./ui"
 createIcons({
     icons: {
         Dices,
@@ -19,6 +20,7 @@ const mesaCartas = document.querySelector("#mesaCartas")
 btnNovoBaralho.addEventListener("click", async function (event) {
     const baralho = await criarBaralho()
     localStorage.setItem("baralhoId", baralho.deck_id)
+    criarBaralhoUI()
     const btn = event.target
     btn.setAttribute("disabled", true)
     baralhoId.textContent = baralho.deck_id
@@ -30,3 +32,4 @@ mesaBaralho.addEventListener("click", async function () {
     )
     console.log(cartasCompradas)
 })
+criarBaralhoUI()
