@@ -31,4 +31,4 @@ mesaBaralho.addEventListener("click", async function () {
     )
     console.log(cartasCompradas)
 })
-UI.renderizarBaralhoMesa()
+
