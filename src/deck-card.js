@@ -12,8 +12,8 @@ createIcons({
 
 const btnNovoBaralho = document.querySelector("#btnNovoBaralho")
 const btnResetarMesa = document.querySelector("#btnResetarMesa")
-const baralhoId = document.querySelector("#baralhoId")
-const cartasRestantes = document.querySelector("#cartasRestantes")
+const displayBaralhoId = document.querySelector("#baralhoId")
+const displayCartasRestantes = document.querySelector("#cartasRestantes")
 const mesaBaralho = document.querySelector("#mesaBaralho")
 const mesaCartas = document.querySelector("#mesaCartas")
 
@@ -22,8 +22,9 @@ btnNovoBaralho.addEventListener("click", async function (event) {
     localStorage.setItem("baralhoId", baralho.deck_id)
     const btn = event.target
     btn.setAttribute("disabled", true)
-    baralhoId.textContent = baralho.deck_id
-    cartasRestantes.textContent = baralho.remaining
+    displayBaralhoId.textContent = baralho.deck_id
+    displayCartasRestantes.textContent = baralho.remaining
+    UI.renderizarBaralhoMesa()
 })
 mesaBaralho.addEventListener("click", async function () {
     const cartasCompradas = await comprarCarta(
