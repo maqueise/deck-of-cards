@@ -1,5 +1,5 @@
 import "./style.css"
-import { comprarCarta, criarBaralho } from "./api/deck-of-cards"
+import { comprarCarta, consultarBaralho, criarBaralho } from "./api/deck-of-cards"
 import { Coins, createIcons, Dices, Layers } from "lucide"
 import { UI } from "./ui"
 createIcons({
@@ -18,8 +18,14 @@ const mesaBaralho = document.querySelector("#mesaBaralho")
 const mesaCartas = document.querySelector("#mesaCartas")
 
 btnNovoBaralho.addEventListener("click", async function (event) {
-    const baralho = await criarBaralho()
-    localStorage.setItem("baralhoId", baralho.deck_id)
+    let baralho = null
+    let storageBaralhoId = localStorage.getItem("baralhoId")
+    if(storageBaralhoId){
+        baralho = await  consultarBaralho(storageBaralhoId)
+    }else{
+        baralho = await criarBaralho()
+        localStorage.setItem("baralhoId", baralho.deck_id)
+    }
     const btn = event.target
     btn.setAttribute("disabled", true)
     displayBaralhoId.textContent = baralho.deck_id
@@ -27,9 +33,16 @@ btnNovoBaralho.addEventListener("click", async function (event) {
     UI.renderizarBaralhoMesa()
 })
 mesaBaralho.addEventListener("click", async function () {
-    const cartasCompradas = await comprarCarta(
+    const baralho = await comprarCarta(
         localStorage.getItem("baralhoId")
     )
-    console.log(cartasCompradas)
+    displayCartasRestantes.textContent = baralho.remaining
+    for(let card of baralho.cards){
+        let cartaImg = document.createElement('img')
+        cartaImg.src=card.image
+        cartaImg.classList.add('w-24')
+        mesaCartas.appendChild(cartaImg)
+    }
+
 })
 

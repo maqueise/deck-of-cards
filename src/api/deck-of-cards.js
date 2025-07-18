@@ -10,3 +10,10 @@
     const cartasCompradas = await response.json()
     return cartasCompradas
 }
+
+export async function consultarBaralho(id){
+    const response = await
+    fetch(`https://www.deckofcardsapi.com/api/deck/${id}`)
+    const baralho = await response.json()
+    return baralho
+}
